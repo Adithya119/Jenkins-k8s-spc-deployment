@@ -1,24 +1,23 @@
-cd jenkins/workspace/My\ CI-CD\ project/spc-build-and-push-artifacts/target/
-cp spring-petclinic-3.0.0-SNAPSHOT.jar /home/ubuntu/spc/
+cd /home/ubuntu/jenkins/workspace/My\ CI-CD\ project/spc-build-and-push-artifacts/target/
+cp spring-petclinic-3.0.0-SNAPSHOT.jar /home/ubuntu/jenkins/workspace/My\ CI-CD\ project/spc-on-k8s
+cd /home/ubuntu/jenkins/workspace/My\ CI-CD\ project/spc-on-k8s
 
 vi Dockerfile --> edit docker file with new jar file :--
 sed -i 's/<  oldfile  >/spring-petclinic-3.0.0-SNAPSHOT.jar/g' Dockerfile
 
 --
 
-docker image build -f spc-dockerfile -t adithya119/spc-test:v2 .   ---> name it with new verison v2
+docker image build -f Dockerfile -t adithya119/spc:v2 .   ---> name it with new verison v2
 
-docker image push adithya119/spc-test:v2  
+docker image push adithya119/spc:v2  
 
 vi spc.yml --> replace old image with new image name :-
-sed -i 's/spc-test:v1/spc-test:v2/g' spc.yml
+sed -i 's/spc-test:v5/spc:v2/g' spc.yml
 --
 
 kubectl apply -f spc.yml   --> will automatically do rolling update
 
 
-
-sleep 120s
 kubectl get pods -o yaml | grep image:
 
 
