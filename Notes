@@ -1,0 +1,54 @@
+cd jenkins/workspace/My\ CI-CD\ project/spc-build-and-push-artifacts/target/
+cp spring-petclinic-3.0.0-SNAPSHOT.jar /home/ubuntu/spc/
+
+vi Dockerfile --> edit docker file with new jar file :--
+sed -i 's/<  oldfile  >/spring-petclinic-3.0.0-SNAPSHOT.jar/g' Dockerfile
+
+--
+
+docker image build -f spc-dockerfile -t adithya119/spc-test:v2 .   ---> name it with new verison v2
+
+docker image push adithya119/spc-test:v2  
+
+vi spc.yml --> replace old image with new image name :-
+sed -i 's/spc-test:v1/spc-test:v2/g' spc.yml
+--
+
+kubectl apply -f spc.yml   --> will automatically do rolling update
+
+
+
+sleep 120s
+kubectl get pods -o yaml | grep image:
+
+
+kubectl get pods -o wide
+kubectl get svc
+kubectl get deployments.apps
+
+
+
+-----
+Note:-
+
+In interviews tell that you pull new jar from jfrog repo using the ADD command in Dockerfile (you just need to pull & replace old jar path/url with new one)
+
+FROM openjdk:11
+LABEL author="adithya"
+#saving the jar file in root folder with name "spring-petclinic.jar" because by default any cont is run by root.
+ADD https://referenceapplicationskhaja.s3.us-west-2.amazonaws.com/spring-petclinic-2.4.2.jar /spring-petclinic.jar
+EXPOSE 8080
+CMD ["java", "-jar", "/spring-petclinic.jar"]
+-------------------------------------------------------------------
+
+
+** Issue troubleshooting **
+
+pods were not running with new jar file:-
+pods were going to crash loop back off --> definitely something wrong with the image --> to get to know the root cause, run the container manually in "interactive" mode to see errors :--
+
+# docker container run -it -P --name spc-v3 adithya119/spc-test:v3
+Error: LinkageError occurred while loading main class org.springframework.boot.loader.JarLauncher
+        java.lang.UnsupportedClassVersionError: org/springframework/boot/loader/JarLauncher has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0
+
+you know this error --> it needs newer java version. current docker image's base image is openjdk:11 --> replace it with openjdk:17 or even further latest.
