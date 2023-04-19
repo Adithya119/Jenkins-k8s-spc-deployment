@@ -16,7 +16,8 @@ pipeline {
 
         stage('shell') {
             steps {
-                sh '''cd /home/ubuntu/jenkins/workspace/My\ CI-CD\ project/spc-build-and-push-artifacts/target/
+                sh '''cd ..
+                cd spc-build-and-push-artifacts/target/
                 cp spring-petclinic-3.0.0-SNAPSHOT.jar /home/ubuntu/jenkins/workspace/My\ CI-CD\ project/spc-on-k8s
                 cd /home/ubuntu/jenkins/workspace/My\ CI-CD\ project/spc-on-k8s
                 ls
