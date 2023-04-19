@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spc-manual
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spc
+      env: test
+  template:
+    metadata:
+      labels:
+        app: spc
+        env: test
+    spec:
+      containers:
+      - name: spc-test
+        image: adithya119/spc-test:v5
+        ports:
+        - containerPort: 8080
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: spc-service
+spec:
+  selector:
+    app: spc
+    env: test
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 8080
+
+---
