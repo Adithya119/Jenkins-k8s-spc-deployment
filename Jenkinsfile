@@ -24,9 +24,9 @@ pipeline {
                 sleep 5s
                 date
                 sleep 5s
-                docker image build -f Dockerfile -t adithya119/spc:v3 .
-                docker image push adithya119/spc:v3
-                sed -i 's/spc:v2/spc:v3/g' spc.yml
+                docker image build -f Dockerfile -t adithya119/spc:v4 .
+                docker image push adithya119/spc:v4
+                sed -i 's/spc:v3/spc:v4/g' spc.yml
                 sleep 2s
                 kubectl apply -f spc.yml
                 kubectl get pods -o yaml | grep image:
