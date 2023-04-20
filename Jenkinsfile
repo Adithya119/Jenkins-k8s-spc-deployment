@@ -10,7 +10,7 @@ pipeline {
 
         stage('git') {
             steps {
-                git branch: 'master', poll: false, url: 'https://github.com/Adithya119/Jenkins-k8s-spc-deployment.git'
+                git branch: 'master', url: 'https://github.com/Adithya119/Jenkins-k8s-spc-deployment.git'
             }
         }
 
