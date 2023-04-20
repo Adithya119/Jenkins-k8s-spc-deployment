@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: spc-test
-        image: adithya119/spc:v4
+        image: adithya119/spc:v5
         ports:
         - containerPort: 8080
 
