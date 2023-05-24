@@ -30,7 +30,7 @@ kubectl get deployments.apps
 -----
 Note:-
 
-In interviews tell that you pull new jar from jfrog repo using the ADD command in Dockerfile (you just need to pull & replace old jar path/url with new one)
+In interviews tell that you pull new jar from jfrog or your organization's repo using the ADD command in Dockerfile (you just need to pull & replace old jar path/url with new one)
 
 FROM openjdk:11
 LABEL author="adithya"
