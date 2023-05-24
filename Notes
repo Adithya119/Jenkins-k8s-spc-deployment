@@ -8,7 +8,7 @@ sed -i 's/<  oldfile  >/spring-petclinic-3.0.0-SNAPSHOT.jar/g' Dockerfile
 --
 
 docker image build -f Dockerfile -t adithya119/spc:v2 .   ---> name it with new verison v2
-
+ 
 docker image push adithya119/spc:v2  
 
 vi spc.yml --> replace old image with new image name :-
