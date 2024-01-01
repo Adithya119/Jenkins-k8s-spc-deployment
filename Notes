@@ -30,7 +30,7 @@ kubectl get deployments.apps
 -----
 Note:-
 
-In interviews tell that you pull new jar from jfrog or your organization's repo using the ADD command in Dockerfile (you just need to pull & replace old jar path/url with new one)
+Pull new jar from jfrog or your organization's repo using the ADD command in Dockerfile (you just need to pull & replace old jar path/url with new one)
 
 FROM openjdk:11
 LABEL author="adithya"
@@ -50,4 +50,4 @@ pods were going to crash loop back off --> definitely something wrong with the i
 Error: LinkageError occurred while loading main class org.springframework.boot.loader.JarLauncher
         java.lang.UnsupportedClassVersionError: org/springframework/boot/loader/JarLauncher has been compiled by a more recent version of the Java Runtime (class file version 61.0), this version of the Java Runtime only recognizes class file versions up to 55.0
 
-you know this error --> it needs newer java version. current docker image's base image is openjdk:11 --> replace it with openjdk:17 or even further latest.
+familiar error --> it needs newer java version. current docker image's base image is openjdk:11 --> replace it with openjdk:17 or even further latest.
